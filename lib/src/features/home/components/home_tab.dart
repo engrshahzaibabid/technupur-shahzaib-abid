@@ -96,15 +96,29 @@ class _HomeTabState extends State<HomeTab> {
                             selectedSubCategory = selectedCategory?.subCategory[0];
                           });
                         },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                color: selectedCategory == item ? MyColors.primaryColor : Colors.grey.shade200, )
-                          ),
-                          child: Text(item?.name ?? '', style: TextStyle(
-                              color: selectedCategory == item ? Colors.black : Colors.grey),),
+                        child: Stack(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(
+                                    color: selectedCategory == item ? MyColors.primaryColor : Colors.grey.shade200, )
+                              ),
+                              child: Text(item?.name ?? '', style: TextStyle(
+                                  color: selectedCategory == item ? Colors.black : Colors.grey),),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(3),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                                border: Border.all(color: selectedCategory == item ? MyColors.primaryColor : Colors.grey)
+                              ),
+                              child: Text(selectedCategory?.subCategory.length.toString() ?? 0.toString(),
+                                style: TextStyle(color:  selectedCategory == item ? MyColors.primaryColor : Colors.grey),),
+                            ),
+                          ],
                         ),
                       );
                     },
@@ -129,22 +143,36 @@ class _HomeTabState extends State<HomeTab> {
                             selectedSubCategory = item;
                           });
                         },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                color: selectedSubCategory == item
-                                    ? MyColors.primaryColor
-                                    : Colors.grey.shade300,
-                                width: 1.5),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Container(
-                            margin: const EdgeInsets.all(2),
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
+                        child: Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: selectedSubCategory == item
+                                        ? MyColors.primaryColor
+                                        : Colors.grey.shade300,
+                                    width: 1.5),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Container(
+                                margin: const EdgeInsets.all(2),
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Image.network(item?.image ?? '', fit: BoxFit.cover,),
+                              ),
                             ),
-                            child: Image.network(item?.image ?? '', fit: BoxFit.cover,),
-                          ),
+                            Container(
+                              padding: const EdgeInsets.all(3),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                  border: Border.all(color: selectedSubCategory == item ? MyColors.primaryColor : Colors.grey)
+                              ),
+                              child: Text(selectedSubCategory?.products.length.toString() ?? 0.toString(),
+                                style: TextStyle(color:  selectedSubCategory == item ? MyColors.primaryColor : Colors.grey),),
+                            ),
+                          ],
                         ),
                       );
                     },
@@ -167,7 +195,7 @@ class _HomeTabState extends State<HomeTab> {
                 ),
                 const SizedBox(height: 15,),
                 Container(
-                  height: 300, width: double.infinity,
+                  height: 270, width: double.infinity,
                   margin: const EdgeInsets.symmetric(horizontal: 15),
                   child: ListView.separated(
                     itemCount: selectedSubCategory?.products.length ?? 0,
@@ -220,6 +248,7 @@ class _HomeTabState extends State<HomeTab> {
                   ),
                 ),
                 Container(
+                  margin: const EdgeInsets.all(15),
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
                     color: Colors.teal.shade400,
